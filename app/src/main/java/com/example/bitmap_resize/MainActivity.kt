@@ -6,6 +6,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.navigation.compose.rememberNavController
+import com.example.bitmap_resize.presentation.nvgraph.NavGraph
+import com.example.bitmap_resize.presentation.nvgraph.Route
 import com.example.bitmap_resize.ui.theme.BitmapResizeTheme
 
 
@@ -21,7 +24,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             BitmapResizeTheme {
-
+                val navController = rememberNavController()
+                NavGraph(
+                    navController = navController,
+                    startDestination = Route.HomeScreen
+                )
             }
         }
     }
