@@ -1,4 +1,4 @@
-package com.example.bitmap_resize.presentation
+package com.example.bitmap_resize.presentation.customsize
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -12,14 +12,6 @@ import androidx.compose.ui.Modifier
 
 
 @Composable
-fun ResizeBitmapScreen(){
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.primaryContainer),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ){
-        Text(text = "Details Screen")
-    }
+fun CustomSizeScreen(){
+
 }

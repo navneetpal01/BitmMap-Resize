@@ -10,6 +10,6 @@ sealed class Route{
     object HomeScreen : Route()
 
     @Serializable
-    object ResizeBitmap : Route()
+    object CustomSize : Route()
 
 }

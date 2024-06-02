@@ -10,8 +10,10 @@ import androidx.navigation.compose.rememberNavController
 import com.example.bitmap_resize.presentation.nvgraph.NavGraph
 import com.example.bitmap_resize.presentation.nvgraph.Route
 import com.example.bitmap_resize.ui.theme.BitmapResizeTheme
+import dagger.hilt.android.AndroidEntryPoint
 
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
