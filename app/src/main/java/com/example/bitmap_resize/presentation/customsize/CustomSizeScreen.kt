@@ -1,5 +1,6 @@
 package com.example.bitmap_resize.presentation.customsize
 
+import android.graphics.Bitmap
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -28,18 +29,25 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomSizeScreen() {
+fun CustomSizeScreen(
+    bitmapState : Bitmap?,
+    event : (CustomSizeEvent) -> Unit
+) {
+
 
     val imagePicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) {uri ->
-
-
-
+        if (uri != null){
+            event(CustomSizeEvent.OnChoose(uri))
+        }else{
+            Log.d("App", "User didn't selected any image")
+        }
     }
 
     Scaffold(
@@ -114,7 +122,9 @@ fun CustomSizeScreen() {
     ) { paddingValues ->
         Column(
             modifier = Modifier
-                .padding(paddingValues)
+                .padding(paddingValues),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Top
         ) {
 
         }

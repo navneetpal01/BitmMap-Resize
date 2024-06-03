@@ -1,12 +1,15 @@
 package com.example.bitmap_resize.presentation.nvgraph
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.bitmap_resize.presentation.customsize.CustomSizeScreen
 import com.example.bitmap_resize.presentation.HomeScreen
+import com.example.bitmap_resize.presentation.customsize.CustomSizeViewModel
 
 
 @Composable
@@ -28,7 +31,12 @@ fun NavGraph(
             )
         }
         composable<Route.CustomSize> {
-            CustomSizeScreen()
+            val viewModel = viewModel<CustomSizeViewModel>()
+            val bitmapState = viewModel.bitmap.collectAsState().value
+            CustomSizeScreen(
+                bitmapState = bitmapState,
+                event = viewModel::onEvent
+            )
         }
     }
 

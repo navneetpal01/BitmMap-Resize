@@ -7,7 +7,7 @@ import android.net.Uri
 interface BitmapRepository{
 
 
-    fun convertUriToBitmap(uri : Uri) : Bitmap
+    fun convertUriToBitmap(uri : Uri) : Bitmap?
 
 
 
