@@ -7,21 +7,22 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.example.bitmap_resize.presentation.customsize.CustomSizeScreen
 import com.example.bitmap_resize.presentation.HomeScreen
+import com.example.bitmap_resize.presentation.customsize.CustomSizeScreen
 import com.example.bitmap_resize.presentation.customsize.CustomSizeViewModel
 
 
 @Composable
 fun NavGraph(
-    navController : NavHostController = rememberNavController(),
-    startDestination : Route = Route.HomeScreen
-){
+    navController: NavHostController = rememberNavController(),
+    startDestination: Route = Route.HomeScreen
+) {
+    val customViewModel = viewModel<CustomSizeViewModel>()
 
     NavHost(
         navController = navController,
         startDestination = startDestination
-        )
+    )
     {
         composable<Route.HomeScreen> {
             HomeScreen(
@@ -31,11 +32,10 @@ fun NavGraph(
             )
         }
         composable<Route.CustomSize> {
-            val viewModel = viewModel<CustomSizeViewModel>()
-            val bitmapState = viewModel.bitmap.collectAsState().value
+            val bitmapState = customViewModel.bitmap.collectAsState().value
             CustomSizeScreen(
                 bitmapState = bitmapState,
-                event = viewModel::onEvent
+                event = customViewModel::onEvent
             )
         }
     }
