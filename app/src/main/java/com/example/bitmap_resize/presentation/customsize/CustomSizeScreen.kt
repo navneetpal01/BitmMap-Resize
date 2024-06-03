@@ -123,12 +123,32 @@ fun CustomSizeScreen(
 
                         }
                         .fillMaxWidth()
-                        .padding(horizontal = 40.dp, vertical = 6.dp),
+                        .padding(start = 40.dp, end = 40.dp, top = 6.dp),
                     shape = RectangleShape
                 )
                 {
                     Text(
                         text = "Convert"
+                    )
+                }
+                Button(
+                    onClick = {
+                        if (bitmapState != null) {
+                            Log.d("pokemon", "CustomSizeScreen: ")
+                        }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = if (bitmapState == null) Color.White.copy(alpha = 0.3f) else Color.White),
+                    modifier = Modifier
+                        .clickable(enabled = false) {
+
+                        }
+                        .fillMaxWidth()
+                        .padding(horizontal = 40.dp, vertical = 6.dp),
+                    shape = RectangleShape
+                )
+                {
+                    Text(
+                        text = "Save Image"
                     )
                 }
             }
