@@ -13,16 +13,15 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -35,15 +34,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.PlatformTextStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomSizeScreen(
     bitmapState : Bitmap?,
-    event : (CustomSizeEvent) -> Unit
+    event : (CustomSizeEvent) -> Unit,
+    onArrowClick : () -> Unit
 ) {
 
 
@@ -67,13 +70,17 @@ fun CustomSizeScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                     ) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = null,
-                            tint = Color.White,
-                            modifier = Modifier
-                                .padding(start = 5.dp, end = 10.dp),
-                        )
+                        IconButton(
+                            onClick = onArrowClick
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = null,
+                                tint = Color.White,
+                                modifier = Modifier
+                                    .padding(start = 5.dp, end = 10.dp),
+                            )
+                        }
                     }
                 },
                 modifier = Modifier
@@ -106,11 +113,11 @@ fun CustomSizeScreen(
                 }
                 Button(
                     onClick = {
-                        if (false) {
+                        if (bitmapState != null) {
                             Log.d("pokemon", "CustomSizeScreen: ")
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.White.copy(alpha = 0.3f)),
+                    colors = ButtonDefaults.buttonColors(containerColor = if (bitmapState == null) Color.White.copy(alpha = 0.3f) else Color.White),
                     modifier = Modifier
                         .clickable(enabled = false) {
 
@@ -151,7 +158,31 @@ fun CustomSizeScreen(
                 )
 
                 }
+            }
+            if (bitmapState != null){
+                Text(
+                    text = "Height = ${bitmapState.height.toString()}",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium,
+                    fontStyle = FontStyle.Normal,
+                    style = TextStyle(
+                        platformStyle = PlatformTextStyle(
+                            includeFontPadding = false
+                        )
+                    )
+                )
 
+                Text(
+                    text = "Width = ${bitmapState.width.toString()}",
+                    color = Color.White,
+                    fontWeight = FontWeight.Medium,
+                    fontStyle = FontStyle.Normal,
+                    style = TextStyle(
+                        platformStyle = PlatformTextStyle(
+                            includeFontPadding = false
+                        )
+                    )
+                )
             }
         }
     }

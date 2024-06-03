@@ -17,7 +17,8 @@ fun NavGraph(
     navController: NavHostController = rememberNavController(),
     startDestination: Route = Route.HomeScreen
 ) {
-    val customViewModel = viewModel<CustomSizeViewModel>()
+
+    val customSizeViewModel = viewModel<CustomSizeViewModel>()
 
     NavHost(
         navController = navController,
@@ -32,10 +33,14 @@ fun NavGraph(
             )
         }
         composable<Route.CustomSize> {
-            val bitmapState = customViewModel.bitmap.collectAsState().value
+            val bitmapState = customSizeViewModel.bitmap.collectAsState().value
             CustomSizeScreen(
                 bitmapState = bitmapState,
-                event = customViewModel::onEvent
+                event = customSizeViewModel::onEvent,
+                onArrowClick = {
+                    navController.navigate(Route.HomeScreen)
+                    customSizeViewModel.updateBitmap(null)
+                }
             )
         }
     }

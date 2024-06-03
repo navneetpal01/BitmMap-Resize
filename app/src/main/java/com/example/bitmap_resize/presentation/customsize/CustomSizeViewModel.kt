@@ -13,29 +13,28 @@ import javax.inject.Inject
 @HiltViewModel
 class CustomSizeViewModel @Inject constructor(
     private val bitmapRepository: BitmapRepository
-): ViewModel() {
+) : ViewModel() {
 
 
     private val _bitmap = MutableStateFlow<Bitmap?>(null)
     val bitmap = _bitmap.asStateFlow()
 
 
-
-    fun onEvent(event : CustomSizeEvent){
-        when(event){
+    fun onEvent(event: CustomSizeEvent) {
+        when (event) {
             is CustomSizeEvent.OnChoose -> {
                 val bitmap = bitmapRepository.convertUriToBitmap(event.uri)
                 _bitmap.update { bitmap }
             }
+
             CustomSizeEvent.OnConvert -> TODO()
         }
 
     }
 
-
-
-
-
+    fun updateBitmap(bitmap: Bitmap?) {
+        _bitmap.value = bitmap
+    }
 
 
 }
