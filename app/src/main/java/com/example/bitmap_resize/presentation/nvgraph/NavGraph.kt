@@ -1,5 +1,6 @@
 package com.example.bitmap_resize.presentation.nvgraph
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -34,11 +35,15 @@ fun NavGraph(
         }
         composable<Route.CustomSize> {
             val bitmapState = customSizeViewModel.bitmap.collectAsState().value
+            BackHandler {
+                customSizeViewModel.updateBitmap(null)
+                navController.popBackStack()
+            }
             CustomSizeScreen(
                 bitmapState = bitmapState,
                 event = customSizeViewModel::onEvent,
                 onArrowClick = {
-                    navController.navigate(Route.HomeScreen)
+                    navController.popBackStack()
                     customSizeViewModel.updateBitmap(null)
                 }
             )
