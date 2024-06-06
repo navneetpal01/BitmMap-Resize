@@ -1,8 +1,11 @@
 package com.example.bitmap_resize.di
 
+import android.app.Application
 import android.content.Context
 import com.example.bitmap_resize.data.repository.CustomSizeRepositoryImpl
+import com.example.bitmap_resize.data.repository.MediaStoreRepositoryImpl
 import com.example.bitmap_resize.domain.repository.CustomSizeRepository
+import com.example.bitmap_resize.domain.repository.MediaStoreRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,8 +25,11 @@ object AppModule{
         return CustomSizeRepositoryImpl(context)
     }
 
-
-
+    @Provides
+    @Singleton
+    fun providesMediaStoreRepository(application: Application) : MediaStoreRepository{
+        return MediaStoreRepositoryImpl(application)
+    }
 
 
 }
