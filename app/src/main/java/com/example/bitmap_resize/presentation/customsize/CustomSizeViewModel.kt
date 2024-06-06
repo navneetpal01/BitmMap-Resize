@@ -5,7 +5,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
-import com.example.bitmap_resize.domain.repository.BitmapRepository
+import com.example.bitmap_resize.domain.repository.CustomSizeRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class CustomSizeViewModel @Inject constructor(
-    private val bitmapRepository: BitmapRepository
+    private val customSizeRepository: CustomSizeRepository
 ) : ViewModel() {
 
     var state by mutableStateOf<CustomSizeState>(CustomSizeState())
@@ -27,11 +27,20 @@ class CustomSizeViewModel @Inject constructor(
     fun onEvent(event: CustomSizeEvent) {
         when (event) {
             is CustomSizeEvent.OnChoose -> {
-                val bitmap = bitmapRepository.convertUriToBitmap(event.uri)
+                val bitmap = customSizeRepository.convertUriToBitmap(event.uri)
                 _bitmap.update { bitmap }
             }
 
-            CustomSizeEvent.OnConvert -> TODO()
+            CustomSizeEvent.OnConvert -> {
+                if (_bitmap.value != null) {
+                    val bitmap = customSizeRepository.changeBitmapHeightAndWidth(
+                        _bitmap.value!!,
+                        state.height,
+                        state.width
+                    )
+                    _bitmap.update { bitmap }
+                }
+            }
         }
 
     }

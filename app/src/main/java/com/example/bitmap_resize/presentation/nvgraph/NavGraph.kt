@@ -40,13 +40,11 @@ fun NavGraph(
                 navController.popBackStack()
             }
             CustomSizeScreen(
-                bitmapState = bitmapState,
-                event = customSizeViewModel::onEvent,
+                viewModel = customSizeViewModel,
                 onArrowClick = {
                     navController.popBackStack()
                     customSizeViewModel.updateBitmap(null)
                 },
-                state = customSizeViewModel.state
             )
         }
     }

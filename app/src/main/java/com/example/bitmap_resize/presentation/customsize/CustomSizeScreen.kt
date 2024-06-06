@@ -1,6 +1,5 @@
 package com.example.bitmap_resize.presentation.customsize
 
-import android.graphics.Bitmap
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -17,8 +16,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -33,6 +30,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -49,18 +48,17 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomSizeScreen(
-    bitmapState: Bitmap?,
-    event: (CustomSizeEvent) -> Unit,
+    viewModel: CustomSizeViewModel,
     onArrowClick: () -> Unit,
-    state: CustomSizeState
 ) {
 
+    val bitmapState = viewModel.bitmap.collectAsState().value
 
     val imagePicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri ->
         if (uri != null) {
-            event(CustomSizeEvent.OnChoose(uri))
+            viewModel.onEvent(CustomSizeEvent.OnChoose(uri))
         } else {
             Log.d("App", "User didn't selected any image")
         }
@@ -120,7 +118,7 @@ fun CustomSizeScreen(
                 Button(
                     onClick = {
                         if (bitmapState != null) {
-                            Log.d("pokemon", "CustomSizeScreen: ")
+                            viewModel.onEvent(CustomSizeEvent.OnConvert)
                         }
                     },
                     colors = ButtonDefaults.buttonColors(
@@ -220,18 +218,18 @@ fun CustomSizeScreen(
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 OutlinedTextField(
-                    value = bitmapState.height.toString(),
+                    value = viewModel.state.height.toString(),
                     onValueChange = {
-                        state.height = it.toInt()
+                        viewModel.state = viewModel.state.copy(height = it.toInt())
                     },
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 10.dp, vertical = 5.dp)
                 )
                 OutlinedTextField(
-                    value = bitmapState.width.toString(),
+                    value = viewModel.state.width.toString(),
                     onValueChange = {
-                        state.width = it.toInt()
+                        viewModel.state = viewModel.state.copy(width = it.toInt())
                     },
                     modifier = Modifier
                         .fillMaxWidth()

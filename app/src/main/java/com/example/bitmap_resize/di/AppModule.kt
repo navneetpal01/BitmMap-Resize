@@ -1,8 +1,8 @@
 package com.example.bitmap_resize.di
 
 import android.content.Context
-import com.example.bitmap_resize.data.repository.BitmapRepositoryImpl
-import com.example.bitmap_resize.domain.repository.BitmapRepository
+import com.example.bitmap_resize.data.repository.CustomSizeRepositoryImpl
+import com.example.bitmap_resize.domain.repository.CustomSizeRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,8 +18,8 @@ object AppModule{
 
     @Provides
     @Singleton
-    fun providesBitmapRepository(@ApplicationContext context : Context) : BitmapRepository{
-        return BitmapRepositoryImpl(context)
+    fun providesBitmapRepository(@ApplicationContext context : Context) : CustomSizeRepository{
+        return CustomSizeRepositoryImpl(context)
     }
 
 
