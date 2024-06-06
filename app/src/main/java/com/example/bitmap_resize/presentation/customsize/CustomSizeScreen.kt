@@ -17,6 +17,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Button
@@ -47,20 +49,19 @@ import androidx.compose.ui.unit.dp
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomSizeScreen(
-    bitmapState : Bitmap?,
-    event : (CustomSizeEvent) -> Unit,
-    onArrowClick : () -> Unit
+    bitmapState: Bitmap?,
+    event: (CustomSizeEvent) -> Unit,
+    onArrowClick: () -> Unit,
+    state: CustomSizeState
 ) {
-
-
 
 
     val imagePicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
-    ) {uri ->
-        if (uri != null){
+    ) { uri ->
+        if (uri != null) {
             event(CustomSizeEvent.OnChoose(uri))
-        }else{
+        } else {
             Log.d("App", "User didn't selected any image")
         }
     }
@@ -103,7 +104,7 @@ fun CustomSizeScreen(
             ) {
                 Button(
                     onClick = {
-                              imagePicker.launch("image/*")
+                        imagePicker.launch("image/*")
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Color.White),
                     modifier = Modifier
@@ -122,7 +123,11 @@ fun CustomSizeScreen(
                             Log.d("pokemon", "CustomSizeScreen: ")
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = if (bitmapState == null) Color.White.copy(alpha = 0.3f) else Color.White),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (bitmapState == null) Color.White.copy(
+                            alpha = 0.3f
+                        ) else Color.White
+                    ),
                     modifier = Modifier
                         .clickable(enabled = false) {
 
@@ -142,7 +147,11 @@ fun CustomSizeScreen(
                             Log.d("pokemon", "CustomSizeScreen: ")
                         }
                     },
-                    colors = ButtonDefaults.buttonColors(containerColor = if (bitmapState == null) Color.White.copy(alpha = 0.3f) else Color.White),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (bitmapState == null) Color.White.copy(
+                            alpha = 0.3f
+                        ) else Color.White
+                    ),
                     modifier = Modifier
                         .clickable(enabled = false) {
 
@@ -172,20 +181,20 @@ fun CustomSizeScreen(
                     .size(180.dp)
                     .background(MaterialTheme.colorScheme.inverseSurface),
                 contentAlignment = Alignment.Center
-            ){
-                bitmapState?.let {bitmap ->
-                Image(
-                    bitmap = bitmap.asImageBitmap(),
-                    contentDescription = "Image",
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    contentScale = ContentScale.Fit
-                )
+            ) {
+                bitmapState?.let { bitmap ->
+                    Image(
+                        bitmap = bitmap.asImageBitmap(),
+                        contentDescription = "Image",
+                        modifier = Modifier
+                            .fillMaxSize(),
+                        contentScale = ContentScale.Fit
+                    )
 
                 }
             }
             Spacer(modifier = Modifier.height(10.dp))
-            if (bitmapState != null){
+            if (bitmapState != null) {
                 Text(
                     text = "Height = ${bitmapState.height.toString()}",
                     color = Color.White,
@@ -211,12 +220,22 @@ fun CustomSizeScreen(
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 OutlinedTextField(
-                    value = ,
-                    onValueChange =
+                    value = bitmapState.height.toString(),
+                    onValueChange = {
+                        state.height = it.toInt()
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 10.dp, vertical = 5.dp)
                 )
                 OutlinedTextField(
-                    value = ,
-                    onValueChange =
+                    value = bitmapState.width.toString(),
+                    onValueChange = {
+                        state.width = it.toInt()
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 10.dp, vertical = 5.dp)
                 )
             }
         }

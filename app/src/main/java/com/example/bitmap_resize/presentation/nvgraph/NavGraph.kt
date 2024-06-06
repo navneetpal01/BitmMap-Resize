@@ -45,7 +45,8 @@ fun NavGraph(
                 onArrowClick = {
                     navController.popBackStack()
                     customSizeViewModel.updateBitmap(null)
-                }
+                },
+                state = customSizeViewModel.state
             )
         }
     }
