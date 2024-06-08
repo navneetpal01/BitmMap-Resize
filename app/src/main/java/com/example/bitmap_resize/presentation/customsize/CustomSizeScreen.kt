@@ -142,7 +142,7 @@ fun CustomSizeScreen(
                 Button(
                     onClick = {
                         if (bitmapState != null) {
-                            Log.d("pokemon", "CustomSizeScreen: ")
+                            viewModel.onEvent(CustomSizeEvent.OnSave)
                         }
                     },
                     colors = ButtonDefaults.buttonColors(
